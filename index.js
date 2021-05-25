@@ -1,24 +1,55 @@
 "use strict";
 
-class Animal {
-  constructor(name, amountOfLegs, type) {
-    this._name = name;
-    this._amountOfLegs = amountOfLegs;
-    this._type = type;
-  }
-  get name() {
-    return this._name;
+class User {
+  constructor(name, surname, age, isBannned) {
+    this.name = name;
+    this.surname = surname;
+    this.age = age;
+    this.isBannned = isBannned;
   }
 
-  set name(name) {
-    if (typeof name === "string") {
-      this._name = name;
-    }
-  }
-  eat() {
-    return `${this.name} is eating`;
+  getFullName() {
+    return `${this.name} ${this.surname}`;
   }
 }
 
-const lion = new Animal("sneg", 4, "Cat");
-const turtle = new Animal("test", 4, "Turtle");
+/*Admin, у него все что у юзера и ban(user) */
+class Admin extends User {
+  constructor(name, surname, age, email) {
+    super(name, surname, age);
+    this.email = email;
+  }
+  ban(user) {
+    user.isBannned = true;
+  }
+  unBan(user) {
+    user.isBannned = false;
+  }
+
+  toggleBan(user) {
+    if (user instanceof User) {
+      user.isBannned = !user.isBannned;
+      return;
+    }
+    throw new TypeError();
+  }
+}
+const us = new User("Leo", "Gredfield", 40);
+const ad = new Admin("X", "XX", 30);
+
+/*class Moderator extends User {
+  constructor(name, surname, age, permission) {
+    super(name, surname, age);
+    this.permission = permission;
+  }
+
+  createMessage(msgBody) {
+    //send massage
+  }
+
+  deleteMessage(id) {
+    //delete
+  }
+}
+
+const moder = new Moderator("Moder", "Moderov", 30, {});*/
